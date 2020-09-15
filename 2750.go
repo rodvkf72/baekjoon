@@ -11,10 +11,10 @@ func main() {
 	for m = 0; m < input1; m++ {
 		fmt.Scan(&arr[m])
 	}
-	sort(arr, input1-1)
+	sortt(arr, input1-1)
 }
 
-func sort(a []int, b int) {
+func sortt(a []int, b int) {
 	var m int
 	var n int
 	var o int
