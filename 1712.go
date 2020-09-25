@@ -9,7 +9,7 @@ import (
 
 func main() {
 	input := bufio.NewScanner(os.Stdin)
-	var count int = 0
+	var count = 0
 
 	input.Scan()
 	var input1, _ = strconv.Atoi(input.Text())
