@@ -1,23 +1,33 @@
 package main
 
-import "fmt"
+import (
+	"bufio"
+	"fmt"
+	"os"
+)
 
 var empty [41]int
 
 func main() {
+	r := bufio.NewReader(os.Stdin)
+	w := bufio.NewWriter(os.Stdout)
+
 	var input int
 	var i int
-	fmt.Scanf("%d", &input)
+	fmt.Fscanf(r, "%d", &input)
 	for i = 0; i < input; i++ {
 		var m int
-		fmt.Scanf("%d", &m)
+		fmt.Fscanf(r, "%d", &m)
 		if m == 0 {
-			fmt.Println("1 0")
+			fmt.Fprintln(w, "1 0")
+			w.Flush()
 		} else if m == 1 {
-			fmt.Println("0 1")
+			fmt.Fprintln(w, "0 1")
+			w.Flush()
 		} else {
 			Fibonacci(m)
-			fmt.Printf("%d %d\n", empty[m-1], empty[m])
+			fmt.Fprintf(w, "%d %d\n", empty[m-1], empty[m])
+			w.Flush()
 		}
 	}
 }
