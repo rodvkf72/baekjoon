@@ -15,16 +15,20 @@ public class Baekjoon_1654 {
 			String[] inputs = br.readLine().split(" ");
 			int[] values = new int[Integer.parseInt(inputs[0])];
 			
+			long min = 0;
+			long max = 0;
+			long half = 0;
+			
 			for (int i = 0; i < Integer.parseInt(inputs[0]); i++ ) {
 				values[i] = Integer.parseInt(br.readLine());
+				
+				if (max < values[i]) {
+					max = values[i];
+				}
 			}
 			
-			Arrays.sort(values);
+			max++;
 			
-			long min = 0;
-			long max = values[values.length-1];
-			
-			long half = 0;
 			while (min < max) {
 				long cnt = 0;
 				half = (min + max) / 2;

@@ -3,8 +3,9 @@ import java.io.BufferedWriter;
 import java.io.InputStreamReader;
 import java.io.OutputStreamWriter;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class Baekjoon_12865 {
 	public static void main(String[] args) {
@@ -17,48 +18,26 @@ public class Baekjoon_12865 {
 			String[] inputs = br.readLine().split(" ");
 			int cycle = Integer.parseInt(inputs[0]);
 			int maximum = Integer.parseInt(inputs[1]);
-			VO[] dp = new VO[cycle];
 			
-			ArrayList<VO> aList = new ArrayList<>();
+			Map<Integer, Integer> map = new HashMap<>();	// 무게, 값
 			for (int i = 0; i < cycle; i++) {
 				String[] values = br.readLine().split(" ");
-				int weight = Integer.parseInt(values[0]);
-				int price = Integer.parseInt(values[1]);
-				
-				VO vo = new VO(weight, price);
-				aList.add(vo);
+				map.put(Integer.parseInt(values[0]), Integer.parseInt(values[1]));
 			}
 			
-			Comparator<VO> comp = new Comparator<VO>() {
-				@Override
-				public int compare(VO vo1, VO vo2) {
-					if (vo1.getPrice() == vo2.getPrice()) {
-						return vo1.getWeight() - vo2.getWeight();
-					}
-					return vo2.getPrice() - vo1.getPrice();
-				}
-			};
+			List<Integer> keyList = new ArrayList<>(map.keySet());
+			keyList.sort((s1, s2) -> s1.compareTo(s2));
 			
-			Collections.sort(aList, comp);
-			
-			for (int i = 0; i < dp.length; i++) {
-				VO sample = new VO(aList.get(i).getWeight(), aList.get(i).getPrice());
-				for (int j = i; j < dp.length; j++) {
-					if (sample.getWeight() + aList.get(j).getWeight() <= maximum) {
-						sample.setWeight(sample.getWeight() + aList.get(j).getWeight());
-						sample.setPrice(sample.getPrice() + aList.get(j).getPrice());
-					}
-				}
-				dp[i] = sample;
+			List<VO> list = new ArrayList<>();
+			for (int key : keyList) {
+				VO vo = new VO(key, map.get(key));
+				list.add(vo);
 			}
 			
-			int answer = 0;
-			for (int i = 0; i < dp.length; i++) {
-				if (answer < dp[i].getPrice()) {
-					answer = dp[i].getPrice();
-				}
-			}
-			bw.write(String.valueOf(answer));
+			
+			
+			
+			
 			bw.flush();
 			
 			bw.close();
@@ -71,25 +50,28 @@ public class Baekjoon_12865 {
 	}
 	
 	static class VO {
-		private int weight;
-		private int price;
+		int weight;
+		int price;
 		
 		public VO(int weight, int price) {
 			this.weight = weight;
 			this.price = price;
 		}
 		
-		public void setWeight(int weight) {
+		void setWeight(int weight) {
 			this.weight = weight;
 		}
-		public void setPrice(int price) {
+		
+		void setPrice(int price) {
 			this.price = price;
 		}
-		public int getWeight() {
-			return this.weight;
+		
+		int getWeight() {
+			return weight;
 		}
-		public int getPrice() {
-			return this.price;
+		
+		int getPrice() {
+			return price;
 		}
 	}
 }
